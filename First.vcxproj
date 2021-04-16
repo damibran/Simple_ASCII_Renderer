@@ -151,12 +151,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="input.h" />
-    <ClInclude Include="exceptions.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="screen.h" />
     <ClInclude Include="shape.h" />
     <ClInclude Include="shapes\circle.h" />
     <ClInclude Include="shapes\cross.h" />
+    <ClInclude Include="shapes\cube.h" />
     <ClInclude Include="shapes\ellipse.h" />
     <ClInclude Include="shapes\face.h" />
     <ClInclude Include="shapes\hat.h" />

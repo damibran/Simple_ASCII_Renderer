@@ -1,22 +1,17 @@
 #pragma once
 #include "../shape.h"
-#include "../exceptions.h"
 
 class line : public shape {
 public:
-	line(float d) : a(glm::vec4(-d/2,0,1,1)), b(glm::vec4(d/2,0,1,1)) 
-	{
-		if (d <= 0)
-			throw CantCreateShape("line");
-	}
+	line(float d) : a(glm::vec4(-d / 2, 0, 1, 1)), b(glm::vec4(d / 2, 0, 1, 1)){}
 	virtual void drawChild(const glm::mat4& parent_trans)override
 	{
 		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
-		int x0 = (thisTrans * a)[0]/(thisTrans * a)[3] * gScreen.XMAX;
-		int y0 = (thisTrans * a)[1] / (thisTrans * a)[3]*gScreen.YMAX;
+		int x0 = (thisTrans * a)[0]/(thisTrans * a)[3] * gScreen.XMAX+ gScreen.XMAX/2;
+		int y0 = (thisTrans * a)[1] / (thisTrans * a)[3]*gScreen.YMAX + gScreen.YMAX / 2;
 
-		int x1 = (thisTrans * b)[0] / (thisTrans * b)[3] * gScreen.XMAX;
-		int y1 = (thisTrans * b)[1] / (thisTrans * b)[3] * gScreen.YMAX;
+		int x1 = (thisTrans * b)[0] / (thisTrans * b)[3] * gScreen.XMAX + gScreen.XMAX / 2;
+		int y1 = (thisTrans * b)[1] / (thisTrans * b)[3] * gScreen.YMAX + gScreen.YMAX / 2;
 
 		put_line(x0, y0, x1, y1);
 		for (int i = 0; i < childs.size(); ++i)

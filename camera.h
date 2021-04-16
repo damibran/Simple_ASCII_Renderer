@@ -20,11 +20,11 @@ public:
 			position = glm::translate(position, { -tspeed,0 , 0 });
 		else if (act == CameraAction::ZOOMOUT)
 		{
-			position = glm::translate(position, { tspeed ,tspeed,-tspeed });
+			position = glm::translate(position, { 0 ,0,-tspeed });
 		}
 		else if (act == CameraAction::ZOOMIN)
 		{
-			position = glm::translate(position, { -tspeed ,-tspeed,tspeed });
+			position = glm::translate(position, { 0 ,0,tspeed });
 		}
 	}
 	glm::mat4 getCameraViewMat()
@@ -32,7 +32,7 @@ public:
 		return proj*position;
 	}
 private:
-	glm::mat4 proj = glm::perspective(glm::radians(120.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 100.0f);
+	glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 100.0f);
 	float speed=30;
 	glm::mat4 position = glm::translate(glm::mat4(1.0f), { 0,0, -30 });
 };

@@ -28,10 +28,10 @@ public:
 		this->addChild(nose);
 		this->addChild(mouth);
 
-		l_eye->translate({ -w / 4,h / 4 });
-		r_eye->translate({ w / 4,h / 4 });
+		l_eye->translate({ -w / 4,h / 4,0 });
+		r_eye->translate({ w / 4,h / 4 ,0 });
 
-		mouth->translate({ 0, -h / 4 });
+		mouth->translate({ 0, -h / 4 ,0});
 	}
 
 };

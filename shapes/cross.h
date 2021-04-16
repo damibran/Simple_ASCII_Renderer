@@ -11,8 +11,8 @@ public:
 		l(std::make_shared < line>(h)), 
 		u(std::make_shared < line>(w))
 	{
-		l->rotate(glm::radians(45.0f));
-		u->rotate(glm::radians(-45.0f));
+		l->rotate(glm::radians(45.0f), { 0,0,1 });
+		u->rotate(glm::radians(-45.0f), { 0,0,1 });
 
 
 		this->addChild(l);

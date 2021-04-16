@@ -20,6 +20,6 @@ public:
 		this->addChild(emblem);
 		this->addChild(brim);
 
-		brim->translate({ 0, -h / 2 });
+		brim->translate({ 0, -h / 2 ,0});
 	}
 };

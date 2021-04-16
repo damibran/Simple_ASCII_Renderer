@@ -15,13 +15,13 @@ public:
 		r(std::make_shared<line>(h)),
 		d(std::make_shared<line>(w))
 	{
-		l->rotate(glm::radians(90.0f));
-		r->rotate(glm::radians(90.0f));
+		l->rotate(glm::radians(90.0f), {0,0,1});
+		r->rotate(glm::radians(90.0f), { 0,0,1 });
 
-		l->translate({ -w / 2, 0 });
-		r->translate({ w / 2, 0 });
-		u->translate({ 0, h / 2 });
-		d->translate({ 0, -h / 2 });
+		l->translate({ -w / 2, 0 ,0});
+		r->translate({ w / 2, 0  ,0});
+		u->translate({ 0, h / 2  ,0});
+		d->translate({ 0, -h / 2 ,0});
 
 
 		this->addChild(l);

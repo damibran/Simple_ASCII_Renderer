@@ -19,7 +19,7 @@ public:
 		this->addChild(f);
 		this->addChild(cap);
 
-		f->translate({ 0, -h / 2 });
-		cap->translate({ 0, h / 4 });
+		f->translate({ 0, -h / 2 ,0});
+		cap->translate({ 0, h / 4,0});
 	}
 };

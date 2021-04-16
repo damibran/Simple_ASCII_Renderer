@@ -24,14 +24,14 @@ public:
 			childs[i]->drawChild(thisTrans);
 		}
 	}
-	void translate(const glm::vec2& v)
+	void translate(const glm::vec3& v)
 	{
-		glm::mat4 trans = glm::translate(glm::mat4(1.0f), glm::vec3(v,0));
+		glm::mat4 trans = glm::translate(glm::mat4(1.0f), v);
 		position = trans * position;
 	}
-	void rotate(const float& angle)
+	void rotate(float angle,glm::vec3 v)
 	{
-		glm::mat4 trans = glm::rotate(glm::mat4(1.0f), angle, glm::vec3(0, 0, 1));
+		glm::mat4 trans = glm::rotate(glm::mat4(1.0f), glm::radians(angle), v);
 		rotation = trans * rotation;
 	}
 	virtual void scale(const glm::vec3& factor)
