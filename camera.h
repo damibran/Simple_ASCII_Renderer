@@ -11,28 +11,27 @@ public:
 	{
 		float tspeed = dt * speed;
 		if (act == CameraAction::UP)
-			position = glm::translate(position, { 0,-tspeed , 0});
+			cameraPos += tspeed * cameraUp;
 		else if(act == CameraAction::DOWN)
-			position = glm::translate(position, { 0,tspeed , 0 });
+			cameraPos -= tspeed * cameraUp;
 		else if (act == CameraAction::LEFT)
-			position = glm::translate(position, { tspeed,0 , 0 });
+			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * tspeed;
 		else if (act == CameraAction::RIGHT)
-			position = glm::translate(position, { -tspeed,0 , 0 });
+			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * tspeed;
 		else if (act == CameraAction::ZOOMOUT)
-		{
-			position = glm::translate(position, { 0 ,0,-tspeed });
-		}
+			cameraPos -= tspeed * cameraFront;
 		else if (act == CameraAction::ZOOMIN)
-		{
-			position = glm::translate(position, { 0 ,0,tspeed });
-		}
+			cameraPos += tspeed * cameraFront;
 	}
 	glm::mat4 getCameraViewMat()
 	{
-		return proj*position;
+		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		return proj* view;
 	}
 private:
 	glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 100.0f);
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 30.0f);
+	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	float speed=30;
-	glm::mat4 position = glm::translate(glm::mat4(1.0f), { 0,0, -30 });
 };
