@@ -16,10 +16,13 @@ int main()
 	std::shared_ptr<shape> x=std::make_shared<line>(500);
 	std::shared_ptr<shape> y = std::make_shared<line>(500);
 	y->rotate(90.0f, { 0,0,1 });
-	std::shared_ptr<shape> cub = std::make_shared<Mesh>("res/cube.fbx");
+	std::shared_ptr<shape> cub = std::make_shared<Mesh>("res/cub.obj");
 
-	worldObj.addChild(x);
-	worldObj.addChild(y);
+	cub->scale({ 10,10,10 });
+	cub->translate({ -10,0,0 });
+
+	//worldObj.addChild(x);
+	//worldObj.addChild(y);
 	worldObj.addChild(cub);
 
 	auto tp1 = std::chrono::system_clock::now();
@@ -45,6 +48,8 @@ int main()
 
 		/////////////////////////////////////////////////////////////////////////////////////////
 		
+		cub->rotate(0.1, { 0.2,-1,0.6 });
+
 		worldObj.drawChild(cam.getCameraViewMat());
 
 		gScreen.screen_refresh();

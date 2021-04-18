@@ -24,10 +24,6 @@ public:
 	{
 		loadMesh(path);
 	}
-	Mesh(aiMesh* mesh, const aiScene* scene)
-	{
-		processMesh(mesh, scene);
-	}
 	Mesh(vector<glm::vec3> verts, std::vector<unsigned int> indes)
 	{
 		this->vertices = verts;
@@ -38,7 +34,8 @@ public:
 	{
 		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
 
-		for (int i = 0; i < indices.size()-1; ++i)
+		//indices.push_back(0);
+		for (int i = 0; indices.size()!=0 && i < indices.size()-1; ++i)
 		{
 			glm::vec4 a = glm::vec4(vertices[indices[i]],1.0f);
 			glm::vec4 b = glm::vec4(vertices[indices[i+1]], 1.0f);
@@ -68,11 +65,12 @@ private:
 	{
 		// read file via ASSIMP
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate);// | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace
+		const aiScene* scene = importer.ReadFile(path, 0);// aiProcess_Triangulate| aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace
 		// check for errors
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
 		{
-			cout << "ERROR::ASSIMP:: " << importer.GetErrorString() << endl;
+			std::string err = importer.GetErrorString();
+			gScreen.debug_massage("ERROR::ASSIMP:: "+ err);
 			return;
 		}
 		// retrieve the directory path of the filepath
@@ -91,7 +89,7 @@ private:
 			// the node object only contains indices to index the actual objects in the scene. 
 			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			std::shared_ptr<shape> child_mesh = std::make_shared<Mesh>(mesh, scene);
+			std::shared_ptr<shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh,scene));
 			this->addChild(child_mesh);
 		}
 		// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
@@ -102,7 +100,7 @@ private:
 
 	}
 
-	Mesh processMesh(aiMesh* mesh, const aiScene* scene)
+	Mesh* processMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		// data to fill
 		vector<glm::vec3> vertices;
@@ -129,7 +127,7 @@ private:
 		}
 
 		// return a mesh object created from the extracted mesh data
-		return Mesh(vertices, indices);
+		return new Mesh(vertices, indices);
 	}
 
 	void put_line(int x0, int y0, int x1, int y1)

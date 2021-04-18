@@ -26,18 +26,15 @@ public:
 	}
 	void translate(const glm::vec3& v)
 	{
-		glm::mat4 trans = glm::translate(glm::mat4(1.0f), v);
-		position = trans * position;
+		position = glm::translate(position, v);
 	}
 	void rotate(float angle,glm::vec3 v)
 	{
-		glm::mat4 trans = glm::rotate(glm::mat4(1.0f), glm::radians(angle), v);
-		rotation = trans * rotation;
+		rotation = glm::rotate(rotation, glm::radians(angle), v);
 	}
 	virtual void scale(const glm::vec3& factor)
 	{
-		glm::mat4 trans = glm::scale(glm::mat4(1.0f), factor);
-		scaling = trans * scaling;
+		scaling = glm::scale(scaling, factor);
 	}
 protected:
 	std::vector<std::shared_ptr<shape>> childs;
