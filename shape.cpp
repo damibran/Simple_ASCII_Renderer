@@ -3,13 +3,8 @@
 #include "shape.h"
 #include <vector>
 #include "shapes/line.h"
-#include "shapes/rectangle.h"
-#include "shapes/ellipse.h"
-#include "shapes/face.h"
-#include "shapes/man.h"
-#include "shapes/circle.h"
-#include "shapes/cross.h"
 #include "shapes/cube.h"
+#include "shapes/Mesh.h"
 #include <chrono>
 #include "input.h"
 #include "camera.h"
@@ -21,7 +16,7 @@ int main()
 	std::shared_ptr<shape> x=std::make_shared<line>(500);
 	std::shared_ptr<shape> y = std::make_shared<line>(500);
 	y->rotate(90.0f, { 0,0,1 });
-	std::shared_ptr<shape> cub = std::make_shared<cube>(20.0f);
+	std::shared_ptr<shape> cub = std::make_shared<Mesh>("res/cube.fbx");
 
 	worldObj.addChild(x);
 	worldObj.addChild(y);
