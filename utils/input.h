@@ -1,14 +1,15 @@
 #pragma once
 #include <Windows.h>
 
-enum class CameraAction
-{
-	NOTHING,UP, DOWN, LEFT, RIGHT, ZOOMOUT, ZOOMIN
-};
+
 
 class Input
 {
 public:
+	enum class CameraAction
+	{
+		NOTHING, UP, DOWN, LEFT, RIGHT, ZOOMOUT, ZOOMIN
+	};
 	static CameraAction getCameraAction()
 	{
 		CameraAction res= CameraAction::NOTHING;

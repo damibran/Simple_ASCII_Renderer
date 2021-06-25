@@ -7,20 +7,24 @@
 class Camera
 {
 public:
-	void moveCamera(CameraAction act,float dt)
+	Camera(Screen& s):screen(s)
+	{
+		proj = glm::perspective(glm::radians(90.0f), (float)screen.XMAX / (float)screen.YMAX, 0.1f, 200.0f);
+	}
+	void moveCamera(Input::CameraAction act,float dt)
 	{
 		float tspeed = dt * speed;
-		if (act == CameraAction::UP)
+		if (act == Input::CameraAction::UP)
 			cameraPos += tspeed * cameraUp;
-		else if(act == CameraAction::DOWN)
+		else if(act == Input::CameraAction::DOWN)
 			cameraPos -= tspeed * cameraUp;
-		else if (act == CameraAction::LEFT)
+		else if (act == Input::CameraAction::LEFT)
 			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * tspeed;
-		else if (act == CameraAction::RIGHT)
+		else if (act == Input::CameraAction::RIGHT)
 			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * tspeed;
-		else if (act == CameraAction::ZOOMOUT)
+		else if (act == Input::CameraAction::ZOOMOUT)
 			cameraPos -= tspeed * cameraFront;
-		else if (act == CameraAction::ZOOMIN)
+		else if (act == Input::CameraAction::ZOOMIN)
 			cameraPos += tspeed * cameraFront;
 	}
 	glm::mat4 getCameraViewMat()
@@ -29,7 +33,8 @@ public:
 		return proj* view;
 	}
 private:
-	glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 200.0f);
+	Screen& screen;
+	glm::mat4 proj;
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 30.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);

@@ -1,4 +1,0 @@
-C:\dev\repos\Algorithms_and_Data_Structures\First\Debug\First.exe
-C:\dev\repos\Algorithms_and_Data_Structures\First\Debug\First.pdb
-C:\dev\repos\Algorithms_and_Data_Structures\Second\Debug\First.exe
-C:\dev\repos\Algorithms_and_Data_Structures\Second\Debug\First.pdb

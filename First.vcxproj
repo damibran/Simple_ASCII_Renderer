@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="renderers\Rasterizer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\input.h" />

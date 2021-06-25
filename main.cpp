@@ -10,10 +10,13 @@
 
 int main()
 {
-	//== 1.���������� ������ ����� ==
+	Screen screen(235, 124);
+	Rasterizer rasterizer(screen);
 	Shape worldObj;
+	Camera cam(screen);
 
-	std::shared_ptr<Shape> cub = std::make_shared<Mesh>("res/cub.obj");
+
+	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/cub.obj");
 
 	cub->scale({ 10,10,10 });
 
@@ -22,9 +25,6 @@ int main()
 	auto tp1 = std::chrono::system_clock::now();
 	auto tp2 = std::chrono::system_clock::now();
 
-	CameraAction action;
-
-	Camera cam;
 
 	while (1 && !Input::getExitAction())
 	{
@@ -33,11 +33,11 @@ int main()
 		std::chrono::duration<float> elapsedTime = tp2 - tp1;
 		tp1 = tp2;
 		float deltaTime = elapsedTime.count();
-		gScreen.deltaTime = deltaTime;
-		gScreen.screen_clear();
+		screen.deltaTime = deltaTime;
+		screen.screen_clear();
 		/////////////////////////////////////////////////////////////////////////////////////////
 
-		action = Input::getCameraAction();
+		Input::CameraAction action = Input::getCameraAction();
 		cam.moveCamera(action, deltaTime);
 
 		/////////////////////////////////////////////////////////////////////////////////////////
@@ -46,7 +46,7 @@ int main()
 
 		worldObj.drawChild(cam.getCameraViewMat());
 
-		gScreen.screen_refresh();
+		screen.screen_refresh();
 		/////////////////////////////////////////////////////////////////////////////////////////
 	}
 
