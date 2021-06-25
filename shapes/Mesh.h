@@ -28,9 +28,11 @@ public:
 	{
 		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
 
-		for (int i = 0; indices.size()!=0 && i < indices.size()-1; ++i)
+		for (int i = 0; indices.size()!=0 && i <= indices.size()-3; i+=3)
 		{
 			raster.put_line(thisTrans, vertices[indices[i]], vertices[indices[i + 1]]);
+			raster.put_line(thisTrans, vertices[indices[i+1]], vertices[indices[i + 2]]);
+			raster.put_line(thisTrans, vertices[indices[i+2]], vertices[indices[i]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
@@ -42,9 +44,8 @@ public:
 private:
 	Rasterizer& raster;
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	Mesh(Rasterizer* r, vector<glm::vec3> verts, std::vector<unsigned int> indes)
+	Mesh(Rasterizer& r, vector<glm::vec3> verts, std::vector<unsigned int> indes):raster(r)
 	{
-		raster = r;
 		this->vertices = verts;
 		this->indices = indes;
 	}
