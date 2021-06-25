@@ -1,5 +1,5 @@
 #pragma once
-#include"../shape.h"
+#include"shape.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
@@ -9,7 +9,7 @@
 #include <assimp/postprocess.h>
 using namespace std;
 
-class Mesh : public shape
+class Mesh : public Shape
 {
 public:
 	// mesh Data
@@ -88,7 +88,7 @@ private:
 			// the node object only contains indices to index the actual objects in the scene. 
 			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			std::shared_ptr<shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh,scene));
+			std::shared_ptr<Shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh,scene));
 			this->addChild(child_mesh);
 		}
 		// after we've processed all of the meshes (if any) we then recursively process each of the children nodes

@@ -1,20 +1,19 @@
 #include <time.h>
-#include "screen.h"
-#include "shape.h"
-#include <vector>
-#include "shapes/line.h"
-#include "shapes/cube.h"
+#include "utils/screen.h"
+#include "shapes/shape.h"
 #include "shapes/Mesh.h"
+#include "utils/input.h"
+#include "utils/camera.h"
+#include <vector>
 #include <chrono>
-#include "input.h"
-#include "camera.h"
+
 
 int main()
 {
 	//== 1.���������� ������ ����� ==
-	shape worldObj;
+	Shape worldObj;
 
-	std::shared_ptr<shape> cub = std::make_shared<Mesh>("res/cub.obj");
+	std::shared_ptr<Shape> cub = std::make_shared<Mesh>("res/cub.obj");
 
 	cub->scale({ 10,10,10 });
 

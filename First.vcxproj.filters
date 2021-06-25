@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="screen.h">
+    <ClInclude Include="utils\screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shape.h">
+    <ClInclude Include="shapes\shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\rectangle.h">
@@ -32,16 +32,13 @@
     <ClInclude Include="shapes\face.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shapes\line.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="shapes\ellipse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
+    <ClInclude Include="utils\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="camera.h">
+    <ClInclude Include="utils\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\hat.h">
@@ -54,9 +51,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\cross.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shapes\cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Model\Mesh.h">

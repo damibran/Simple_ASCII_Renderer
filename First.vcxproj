@@ -158,18 +158,16 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="input.h" />
-    <ClInclude Include="camera.h" />
+    <ClInclude Include="utils\input.h" />
+    <ClInclude Include="utils\camera.h" />
     <ClInclude Include="Model\Mesh.h" />
-    <ClInclude Include="screen.h" />
-    <ClInclude Include="shape.h" />
+    <ClInclude Include="utils\screen.h" />
+    <ClInclude Include="shapes\shape.h" />
     <ClInclude Include="shapes\circle.h" />
     <ClInclude Include="shapes\cross.h" />
-    <ClInclude Include="shapes\cube.h" />
     <ClInclude Include="shapes\ellipse.h" />
     <ClInclude Include="shapes\face.h" />
     <ClInclude Include="shapes\hat.h" />
-    <ClInclude Include="shapes\line.h" />
     <ClInclude Include="shapes\man.h" />
     <ClInclude Include="shapes\Mesh.h" />
     <ClInclude Include="shapes\rectangle.h" />
