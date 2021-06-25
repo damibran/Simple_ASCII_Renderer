@@ -13,16 +13,11 @@ int main()
 {
 	//== 1.���������� ������ ����� ==
 	shape worldObj;
-	std::shared_ptr<shape> x=std::make_shared<line>(500);
-	std::shared_ptr<shape> y = std::make_shared<line>(500);
-	y->rotate(90.0f, { 0,0,1 });
+
 	std::shared_ptr<shape> cub = std::make_shared<Mesh>("res/cub.obj");
 
 	cub->scale({ 10,10,10 });
-	cub->translate({ -10,0,0 });
 
-	//worldObj.addChild(x);
-	//worldObj.addChild(y);
 	worldObj.addChild(cub);
 
 	auto tp1 = std::chrono::system_clock::now();
@@ -30,7 +25,7 @@ int main()
 
 	CameraAction action;
 
-	camera cam;
+	Camera cam;
 
 	while (1 && !Input::getExitAction())
 	{

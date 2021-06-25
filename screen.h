@@ -66,4 +66,4 @@ private:
 	DWORD dwBytesWritten;
 	wchar_t* screen;
 	enum color { black = '@', white = ' ' };
-}gScreen(100, 100);
+}gScreen(235, 124);

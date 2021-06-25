@@ -34,7 +34,6 @@ public:
 	{
 		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
 
-		//indices.push_back(0);
 		for (int i = 0; indices.size()!=0 && i < indices.size()-1; ++i)
 		{
 			glm::vec4 a = glm::vec4(vertices[indices[i]],1.0f);

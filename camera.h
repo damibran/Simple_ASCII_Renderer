@@ -4,7 +4,7 @@
 #include "input.h"
 #include "screen.h"
 
-class camera
+class Camera
 {
 public:
 	void moveCamera(CameraAction act,float dt)
@@ -29,7 +29,7 @@ public:
 		return proj* view;
 	}
 private:
-	glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 100.0f);
+	glm::mat4 proj = glm::perspective(glm::radians(90.0f), (float)gScreen.XMAX / (float)gScreen.YMAX, 0.1f, 200.0f);
 	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 30.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
