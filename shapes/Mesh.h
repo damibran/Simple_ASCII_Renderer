@@ -13,6 +13,7 @@ class Mesh : public Shape
 public:
 	// mesh Data
 	vector<glm::vec3> vertices;
+	vector<glm::vec3> normals;
 	vector<unsigned int> indices;
 
 	// model data 
@@ -42,10 +43,11 @@ public:
 private:
 	Rasterizer& raster;
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	Mesh(Rasterizer& r, vector<glm::vec3> verts, std::vector<unsigned int> indes):raster(r)
+	Mesh(Rasterizer& r, vector<glm::vec3> verts, std::vector<unsigned int> indes, std::vector<glm::vec3> norms):raster(r)
 	{
 		this->vertices = verts;
 		this->indices = indes;
+		this->normals = norms;
 	}
 
 	void loadMesh(string const& path)
@@ -96,11 +98,16 @@ private:
 		// walk through each of the mesh's vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
-			glm::vec3 vertex; 
+			glm::vec3 vertex;
 
 			vertex.x = mesh->mVertices[i].x;
 			vertex.y = mesh->mVertices[i].y;
 			vertex.z = mesh->mVertices[i].z;
+
+			if (mesh->HasNormals())
+			{
+				normals.push_back({ mesh->mNormals[i].x,  mesh->mNormals[i].y, mesh->mNormals[i].z });
+			}
 
 			vertices.push_back(vertex);
 		}
@@ -114,6 +121,6 @@ private:
 		}
 
 		// return a mesh object created from the extracted mesh data
-		return new Mesh(raster, vertices, indices);
+		return new Mesh(raster, vertices, indices, normals);
 	}
 };
