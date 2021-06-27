@@ -1,5 +1,6 @@
 #pragma once
 #include"../utils/MVP_mat.h"
+#include"../utils/Vertex.h"
 #include"shape.h"
 #include"../renderers/Rasterizer.h"
 #include <string>
@@ -7,12 +8,6 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-
-struct vertex
-{
-	glm::vec3 pos;
-	glm::vec3 norm;
-};
 
 class Mesh : public Shape
 {
@@ -37,7 +32,7 @@ public:
 
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
-			raster.process_trngl(thisTrans, vertices[indices[i]].pos, vertices[indices[i + 1]].pos, vertices[indices[i + 2]].pos);
+			raster.process_trngl(thisTrans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)

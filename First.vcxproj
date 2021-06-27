@@ -173,6 +173,7 @@
     <ClInclude Include="shapes\man.h" />
     <ClInclude Include="shapes\Mesh.h" />
     <ClInclude Include="shapes\rectangle.h" />
+    <ClInclude Include="utils\Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
