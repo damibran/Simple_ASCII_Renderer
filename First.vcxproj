@@ -162,6 +162,7 @@
     <ClInclude Include="utils\input.h" />
     <ClInclude Include="utils\camera.h" />
     <ClInclude Include="Model\Mesh.h" />
+    <ClInclude Include="utils\MVP_mat.h" />
     <ClInclude Include="utils\screen.h" />
     <ClInclude Include="shapes\shape.h" />
     <ClInclude Include="shapes\circle.h" />

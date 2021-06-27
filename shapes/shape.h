@@ -1,4 +1,5 @@
 #pragma once
+#include"../utils/MVP_mat.h"
 #include "../utils/screen.h"
 #include <vector>
 #include <memory>
@@ -16,9 +17,11 @@ public:
 	{
 		childs.push_back(s);
 	}
-	virtual void drawChild(const glm::mat4& parent_trans)
+	virtual void drawChild(const MVP_mat& parent_trans)
 	{
-		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
+		MVP_mat thisTrans(parent_trans);
+		thisTrans.model = parent_trans.model * position * rotation * scaling;
+
 		for (int i = 0; i < childs.size(); ++i)
 		{
 			childs[i]->drawChild(thisTrans);

@@ -1,8 +1,9 @@
 #pragma once
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include"../utils/MVP_mat.h"
 #include "input.h"
 #include "screen.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 class Camera
 {
@@ -27,10 +28,13 @@ public:
 		else if (act == Input::CameraAction::ZOOMIN)
 			cameraPos += tspeed * cameraFront;
 	}
-	glm::mat4 getCameraViewMat()
+	MVP_mat getCameraProjViewMat()
 	{
-		glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		return proj* view;
+		MVP_mat vp;
+		vp.proj = proj;
+		vp.view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+
+		return vp;
 	}
 private:
 	Screen& screen;

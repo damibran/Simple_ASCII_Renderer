@@ -1,20 +1,21 @@
 #pragma once
-#include "../utils/screen.h"
+#include"../utils/screen.h"
+#include"../utils/MVP_mat.h"
 #include <glm/glm.hpp>
 
 class Rasterizer
 {
 public:
 	Rasterizer(Screen& s) : screen(s) {}
-	void process_trngl(const glm::mat4& trans, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2)
+	void process_trngl(const MVP_mat& trans, const glm::vec3& v0, const glm::vec3& v1, const glm::vec3& v2)
 	{
 		glm::vec4 a = glm::vec4(v0, 1.0f);
 		glm::vec4 b = glm::vec4(v1, 1.0f);
 		glm::vec4 c = glm::vec4(v2, 1.0f);
 
-		glm::vec4 clip_a = trans * a;
-		glm::vec4 clip_b = trans * b;
-		glm::vec4 clip_c = trans * c;
+		glm::vec4 clip_a = trans.proj*trans.view*trans.model * a;
+		glm::vec4 clip_b = trans.proj * trans.view * trans.model * b;
+		glm::vec4 clip_c = trans.proj * trans.view * trans.model * c;
 
 		glm::vec2 raster_a;
 		glm::vec2 raster_b;

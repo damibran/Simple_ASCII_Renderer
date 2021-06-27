@@ -1,4 +1,5 @@
 #pragma once
+#include"../utils/MVP_mat.h"
 #include"shape.h"
 #include"../renderers/Rasterizer.h"
 #include <string>
@@ -25,9 +26,10 @@ public:
 		loadMesh(path);
 	}
 
-	void drawChild(const glm::mat4& parent_trans)override
+	void drawChild(const MVP_mat& parent_trans)override
 	{
-		glm::mat4 thisTrans = parent_trans * position * rotation * scaling;
+		MVP_mat thisTrans(parent_trans);
+		thisTrans.model = parent_trans.model * position * rotation * scaling;
 
 		for (int i = 0; indices.size()!=0 && i <= indices.size()-3; i+=3)
 		{

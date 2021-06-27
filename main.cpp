@@ -46,7 +46,7 @@ int main()
 		cub->rotate(0.1, { 0.2,-1,0.6 });
 		//cub->rotate(-0.5, { 1,0,0 });
 
-		worldObj.drawChild(cam.getCameraViewMat());
+		worldObj.drawChild(cam.getCameraProjViewMat());
 
 		screen.screen_refresh();
 		/////////////////////////////////////////////////////////////////////////////////////////
