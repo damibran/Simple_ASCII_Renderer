@@ -30,9 +30,7 @@ public:
 
 		for (int i = 0; indices.size()!=0 && i <= indices.size()-3; i+=3)
 		{
-			raster.put_line(thisTrans, vertices[indices[i]], vertices[indices[i + 1]]);
-			raster.put_line(thisTrans, vertices[indices[i+1]], vertices[indices[i + 2]]);
-			raster.put_line(thisTrans, vertices[indices[i+2]], vertices[indices[i]]);
+			raster.process_trngl(thisTrans,vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
@@ -70,7 +68,7 @@ private:
 	}
 
 	// processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-	void processNode(aiNode* node, const aiScene* scene)
+	void processNode(const aiNode* node, const aiScene* scene)
 	{
 		// process each mesh located at the current node
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -89,7 +87,7 @@ private:
 
 	}
 
-	Mesh* processMesh(aiMesh* mesh, const aiScene* scene)
+	Mesh* processMesh(const aiMesh* mesh, const aiScene* scene)
 	{
 		// data to fill
 		vector<glm::vec3> vertices;

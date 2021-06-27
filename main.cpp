@@ -19,7 +19,7 @@ int main()
 	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/trngl.obj");
 
 	cub->scale({ 10,10,10 });
-	cub->rotate(90, { 1,0,0 });
+	//cub->rotate(-90, { 1,0,0 });
 
 	worldObj.addChild(cub);
 
@@ -43,7 +43,8 @@ int main()
 
 		/////////////////////////////////////////////////////////////////////////////////////////
 		
-		//cub->rotate(0.1, { 0.2,-1,0.6 });
+		cub->rotate(0.1, { 0.2,-1,0.6 });
+		//cub->rotate(-0.5, { 1,0,0 });
 
 		worldObj.drawChild(cam.getCameraViewMat());
 
