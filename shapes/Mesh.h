@@ -7,21 +7,25 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-using namespace std;
+
+struct vertex
+{
+	glm::vec3 pos;
+	glm::vec3 norm;
+};
 
 class Mesh : public Shape
 {
 public:
 	// mesh Data
-	vector<glm::vec3> vertices;
-	vector<glm::vec3> normals;
-	vector<unsigned int> indices;
+	std::vector<vertex> vertices;
+	std::vector<unsigned int> indices;
 
 	// model data 
-	string directory;
+	std::string directory;
 
 	// constructor, expects a filepath to a 3D model.
-	Mesh(Rasterizer& r,string const& path):raster(r)
+	Mesh(Rasterizer& r, std::string const& path) :raster(r)
 	{
 		loadMesh(path);
 	}
@@ -31,9 +35,9 @@ public:
 		MVP_mat thisTrans(parent_trans);
 		thisTrans.model = parent_trans.model * position * rotation * scaling;
 
-		for (int i = 0; indices.size()!=0 && i <= indices.size()-3; i+=3)
+		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
-			raster.process_trngl(thisTrans,vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+			raster.process_trngl(thisTrans, vertices[indices[i]].pos, vertices[indices[i + 1]].pos, vertices[indices[i + 2]].pos);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
@@ -45,14 +49,13 @@ public:
 private:
 	Rasterizer& raster;
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	Mesh(Rasterizer& r, vector<glm::vec3> verts, std::vector<unsigned int> indes, std::vector<glm::vec3> norms):raster(r)
+	Mesh(Rasterizer& r, std::vector<vertex> verts, std::vector<unsigned int> indes) :raster(r)
 	{
 		this->vertices = verts;
 		this->indices = indes;
-		this->normals = norms;
 	}
 
-	void loadMesh(string const& path)
+	void loadMesh(std::string const& path)
 	{
 		// read file via ASSIMP
 		Assimp::Importer importer;
@@ -80,7 +83,7 @@ private:
 			// the node object only contains indices to index the actual objects in the scene. 
 			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			std::shared_ptr<Shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh,scene));
+			std::shared_ptr<Shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh, scene));
 			this->addChild(child_mesh);
 		}
 		// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
@@ -94,24 +97,26 @@ private:
 	Mesh* processMesh(const aiMesh* mesh, const aiScene* scene)
 	{
 		// data to fill
-		vector<glm::vec3> vertices;
-		vector<unsigned int> indices;
+		std::vector<vertex> vertices;
+		std::vector<unsigned int> indices;
 
 		// walk through each of the mesh's vertices
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		{
-			glm::vec3 vertex;
+			vertex vrtx;
 
-			vertex.x = mesh->mVertices[i].x;
-			vertex.y = mesh->mVertices[i].y;
-			vertex.z = mesh->mVertices[i].z;
+			vrtx.pos.x = mesh->mVertices[i].x;
+			vrtx.pos.y = mesh->mVertices[i].y;
+			vrtx.pos.z = mesh->mVertices[i].z;
 
 			if (mesh->HasNormals())
 			{
-				normals.push_back({ mesh->mNormals[i].x,  mesh->mNormals[i].y, mesh->mNormals[i].z });
+				vrtx.norm.x = mesh->mNormals[i].x;
+				vrtx.norm.y = mesh->mNormals[i].y;
+				vrtx.norm.z = mesh->mNormals[i].z;
 			}
 
-			vertices.push_back(vertex);
+			vertices.push_back(vrtx);
 		}
 		// now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
 		for (unsigned int i = 0; i < mesh->mNumFaces; i++)
@@ -123,6 +128,6 @@ private:
 		}
 
 		// return a mesh object created from the extracted mesh data
-		return new Mesh(raster, vertices, indices, normals);
+		return new Mesh(raster, vertices, indices);
 	}
 };

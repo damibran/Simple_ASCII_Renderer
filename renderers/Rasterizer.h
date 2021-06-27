@@ -13,7 +13,7 @@ public:
 		glm::vec4 b = glm::vec4(v1, 1.0f);
 		glm::vec4 c = glm::vec4(v2, 1.0f);
 
-		glm::vec4 clip_a = trans.proj*trans.view*trans.model * a;
+		glm::vec4 clip_a = trans.proj * trans.view * trans.model * a;
 		glm::vec4 clip_b = trans.proj * trans.view * trans.model * b;
 		glm::vec4 clip_c = trans.proj * trans.view * trans.model * c;
 
