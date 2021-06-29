@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <iostream>
 #include <cstdio>
+#include<vector>
 
 class Screen
 {
@@ -21,7 +22,7 @@ public:
 		for (int y = 0; y < YMAX; ++y)
 		{
 			for (int x = 0; x < XMAX; ++x)
-				screen[y * XMAX + x] = white;
+				screen[y * XMAX + x] = color[0];
 		}
 	}
 	~Screen()
@@ -49,38 +50,48 @@ public:
 		for (int y = 0; y < YMAX; ++y)
 		{
 			for (int x = 0; x < XMAX; ++x)
-				screen[y * XMAX + x] = white;
+				screen[y * XMAX + x] = color[0];
 		}
 	}
 	bool on_screen(int a, int b) // проверка попадания точки на экран
 	{
 		return (0 <= a && a < XMAX && 0 < b && b < YMAX);
 	}
-	void put_point(int a, int b)
+	void put_point(int a, int b, float ck)
 	{
-		if (on_screen(a, b)) screen[(YMAX - b) * XMAX + a] = black;
+		if (on_screen(a, b)) screen[(YMAX - b) * XMAX + a] = color[std::round(ck * color.size())-1];
 	}
-	void put_line(int x0, int y0, int x1, int y1)
-	{
-		int dx = 1;
-		int a = x1 - x0;   if (a < 0) dx = -1, a = -a;
-		int dy = 1;
-		int b = y1 - y0;   if (b < 0) dy = -1, b = -b;
-		int two_a = 2 * a;
-		int two_b = 2 * b;
-		int xcrit = -b + two_a;
-		int eps = 0;
-		for (;;) { //Формирование прямой линии по точкам
-			put_point(x0, y0);
-			if (x0 == x1 && y0 == y1) break;
-			if (eps <= xcrit) x0 += dx, eps += two_b;
-			if (eps >= a || a < b) y0 += dy, eps -= two_a;
-		}
-	}
+	//void put_point(int a, int b)
+	//{
+	//	if (on_screen(a, b)) screen[(YMAX - b) * XMAX + a] = black;
+	//}
+	//void put_line(int x0, int y0, int x1, int y1)
+	//{
+	//	int dx = 1;
+	//	int a = x1 - x0;   if (a < 0) dx = -1, a = -a;
+	//	int dy = 1;
+	//	int b = y1 - y0;   if (b < 0) dy = -1, b = -b;
+	//	int two_a = 2 * a;
+	//	int two_b = 2 * b;
+	//	int xcrit = -b + two_a;
+	//	int eps = 0;
+	//	for (;;) { //Формирование прямой линии по точкам
+	//		put_point(x0, y0);
+	//		if (x0 == x1 && y0 == y1) break;
+	//		if (eps <= xcrit) x0 += dx, eps += two_b;
+	//		if (eps >= a || a < b) y0 += dy, eps -= two_a;
+	//	}
+	//}
 
 private:
 	HANDLE hConsle;
 	DWORD dwBytesWritten;
 	wchar_t* screen;
-	enum color { black = '@', white = ' ' };
+	std::vector<char> color = { ' ', '.', ':', '-', '=', '+', '%', '*','8', '#', '@','B'};
+	//std::vector<char> color = { ' ', '.', '\'', '`', '^', '"', ',', ':', ';', 'I', 'l',
+	//	'!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(',
+	//	'|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U',
+	//	'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 'h', 'a', 
+	//	'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$' };
+
 };

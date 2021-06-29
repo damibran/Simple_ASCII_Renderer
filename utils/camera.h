@@ -8,16 +8,18 @@
 class Camera
 {
 public:
-	Camera(Screen& s):screen(s)
+	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 30.0f);
+
+	Camera(Screen& s) :screen(s)
 	{
 		proj = glm::perspective(glm::radians(90.0f), (float)screen.XMAX / (float)screen.YMAX, 0.1f, 200.0f);
 	}
-	void moveCamera(Input::CameraAction act,float dt)
+	void moveCamera(Input::CameraAction act, float dt)
 	{
 		float tspeed = dt * speed;
 		if (act == Input::CameraAction::UP)
 			cameraPos += tspeed * cameraUp;
-		else if(act == Input::CameraAction::DOWN)
+		else if (act == Input::CameraAction::DOWN)
 			cameraPos -= tspeed * cameraUp;
 		else if (act == Input::CameraAction::LEFT)
 			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * tspeed;
@@ -39,8 +41,7 @@ public:
 private:
 	Screen& screen;
 	glm::mat4 proj;
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 30.0f);
 	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-	float speed=30;
+	float speed = 30;
 };
