@@ -16,7 +16,7 @@ int main()
 	Camera cam(screen);
 
 
-	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/trngl2.obj");
+	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/cub.obj");
 
 	cub->scale({ 10,10,10 });
 	//cub->translate({ 30,0,0 });
@@ -45,7 +45,7 @@ int main()
 		/////////////////////////////////////////////////////////////////////////////////////////
 		rasterizer.world_ligth_pos = cam.cameraPos;
 		//cub->rotate(0.1, { 0,1,0 });
-		//cub->rotate(0.1, { 0.2,-1,0.6 });
+		cub->rotate(0.1, { 0.2,-1,0.6 });
 		//cub->rotate(-0.1, { 1,0,0 });
 
 		worldObj.drawChild(cam.getCameraProjViewMat());
