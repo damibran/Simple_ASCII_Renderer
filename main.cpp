@@ -15,7 +15,7 @@ int main()
 	Shape worldObj;
 	Camera cam(screen);
 
-	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/cub.obj");
+	std::shared_ptr<Shape> cub=std::shared_ptr<Shape>(new Shape(std::make_unique<Mesh>(rasterizer, "res/cub.obj")));
 	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>();
 
 	cub->scale({ 10,10,10 });

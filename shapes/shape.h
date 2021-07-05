@@ -1,6 +1,7 @@
 #pragma once
 #include"../utils/MVP_mat.h"
 #include "../utils/screen.h"
+#include "../shapes/Mesh.h"
 #include <vector>
 #include <memory>
 #include "glm/glm.hpp"
@@ -13,6 +14,7 @@ class Shape
 public:
 	Shape(Shape&) = delete;
 	Shape() = default;
+	Shape(std::unique_ptr<Mesh> m) : mesh(std::move(m)) {}
 	void addChild(std::shared_ptr<Shape>& s)
 	{
 		childs.push_back(s);
@@ -21,6 +23,9 @@ public:
 	{
 		MVP_mat thisTrans(parent_trans);
 		thisTrans.model = parent_trans.model * position * rotation * scaling;
+
+		if(mesh.get()!=nullptr)
+			mesh->drawMesh(thisTrans);
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
@@ -47,8 +52,9 @@ public:
 	{
 		return position * glm::vec4(1);
 	}
-protected:
+private:
 	std::vector<std::shared_ptr<Shape>> childs;
+	std::unique_ptr<Mesh> mesh;
 	glm::mat4 position = glm::mat4(1.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scaling = glm::mat4(1.0f);

@@ -1,7 +1,6 @@
 #pragma once
 #include"../utils/MVP_mat.h"
 #include"../utils/Vertex.h"
-#include"shape.h"
 #include"../renderers/Rasterizer.h"
 #include <string>
 #include <vector>
@@ -9,46 +8,42 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-class Mesh : public Shape
+class Mesh
 {
 public:
-	// mesh Data
-	std::vector<vertex> vertices;
-	std::vector<unsigned int> indices;
-
-	// model data 
-	std::string directory;
-
 	// constructor, expects a filepath to a 3D model.
 	Mesh(Rasterizer& r, std::string const& path) :raster(r)
 	{
 		loadMesh(path);
 	}
 
-	void drawChild(const MVP_mat& parent_trans)override
+	void drawMesh(const MVP_mat& trans)
 	{
-		MVP_mat thisTrans(parent_trans);
-		thisTrans.model = parent_trans.model * position * rotation * scaling;
-
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
-			raster.process_trngl(thisTrans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+			raster.process_trngl(trans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
-			childs[i]->drawChild(thisTrans);
+			childs[i]->drawMesh(trans);
 		}
 	}
-
-private:
-	Rasterizer& raster;
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
 	Mesh(Rasterizer& r, std::vector<vertex> verts, std::vector<unsigned int> indes) :raster(r)
 	{
 		this->vertices = verts;
 		this->indices = indes;
 	}
+
+private:
+	Rasterizer& raster;
+	// mesh Data
+	std::vector<vertex> vertices;
+	std::vector<unsigned int> indices;
+	std::vector<std::unique_ptr<Mesh>> childs;
+	// model data 
+	std::string directory;
 
 	void loadMesh(std::string const& path)
 	{
@@ -78,8 +73,7 @@ private:
 			// the node object only contains indices to index the actual objects in the scene. 
 			// the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			std::shared_ptr<Shape> child_mesh = std::shared_ptr<Mesh>(processMesh(mesh, scene));
-			this->addChild(child_mesh);
+			this->childs.push_back(std::move(processMesh(mesh, scene)));
 		}
 		// after we've processed all of the meshes (if any) we then recursively process each of the children nodes
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -89,7 +83,7 @@ private:
 
 	}
 
-	Mesh* processMesh(const aiMesh* mesh, const aiScene* scene)
+	std::unique_ptr<Mesh> processMesh(const aiMesh* mesh, const aiScene* scene)
 	{
 		// data to fill
 		std::vector<vertex> vertices;
@@ -123,6 +117,6 @@ private:
 		}
 
 		// return a mesh object created from the extracted mesh data
-		return new Mesh(raster, vertices, indices);
+		return std::make_unique<Mesh>(raster, vertices, indices);
 	}
 };
