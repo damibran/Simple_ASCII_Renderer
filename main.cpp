@@ -15,19 +15,22 @@ int main()
 	Shape worldObj;
 	Camera cam(screen);
 
-
 	std::shared_ptr<Shape> cub = std::make_shared<Mesh>(rasterizer, "res/cub.obj");
+	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>();
 
 	cub->scale({ 10,10,10 });
 	//cub->translate({ 30,0,0 });
 	cub->rotate(90, { 1,0,0 });
 
+	lightSource->translate({ 0,0,30 });
+
 	worldObj.addChild(cub);
+	worldObj.addChild(lightSource);
 
 	auto tp1 = std::chrono::system_clock::now();
 	auto tp2 = std::chrono::system_clock::now();
 
-
+	float t = 0;
 	while (1 && !Input::getExitAction())
 	{
 		/////////////////////////////////////////////////////////////////////////////////////////
@@ -42,8 +45,10 @@ int main()
 		Input::CameraAction action = Input::getCameraAction();
 		cam.moveCamera(action, deltaTime);
 
+		t += elapsedTime.count()*0.3;
 		/////////////////////////////////////////////////////////////////////////////////////////
-		rasterizer.world_ligth_pos = cam.cameraPos;
+		lightSource->setPos({30*cos(t),0,30*sin(t)});
+		rasterizer.world_ligth_pos = lightSource->getPos();
 		//cub->rotate(0.1, { 0,1,0 });
 		cub->rotate(0.1, { 0.2,-1,0.6 });
 		//cub->rotate(-0.1, { 1,0,0 });

@@ -31,13 +31,21 @@ public:
 	{
 		position = glm::translate(position, v);
 	}
+	void setPos(const glm::vec3& v)
+	{
+		position= glm::translate(glm::mat4(1), v);
+	}
 	void rotate(float angle,glm::vec3 v)
 	{
 		rotation = glm::rotate(rotation, glm::radians(angle), v);
 	}
-	virtual void scale(const glm::vec3& factor)
+	void scale(const glm::vec3& factor)
 	{
 		scaling = glm::scale(scaling, factor);
+	}
+	glm::vec3 getPos() 
+	{
+		return position * glm::vec4(1);
 	}
 protected:
 	std::vector<std::shared_ptr<Shape>> childs;

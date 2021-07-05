@@ -33,7 +33,6 @@ public:
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
 			raster.process_trngl(thisTrans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
-			//raster.process_trngl(thisTrans, vertices[indices[i + 2]], vertices[indices[i + 1]], vertices[indices[i]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)

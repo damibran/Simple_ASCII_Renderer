@@ -124,7 +124,7 @@ private:
 	{
 		return -((c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x));
 	}
-	float ambient = 0.3;
+	float ambient = 0.5f;
 	float diffStrength = 0.5f;
 	float specStrength = 0.8f;
 	Screen& screen;
