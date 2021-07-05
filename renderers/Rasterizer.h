@@ -66,7 +66,7 @@ private:
 		{
 			int x0 = std::max(0, (int)(std::floor(xmin)));
 			int x1 = std::min(screen.XMAX - 1, (int)(std::floor(xmax)));
-			int y0 = std::max(0, (int)(std::floor(ymin)));
+			int y0 = std::max(1, (int)(std::floor(ymin)));
 			int y1 = std::min(screen.YMAX - 1, (int)(std::floor(ymax)));
 
 			float area = edgeFunction(v0.raster_pos, v1.raster_pos, v2.raster_pos);

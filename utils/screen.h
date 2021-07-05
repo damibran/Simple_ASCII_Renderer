@@ -18,16 +18,12 @@ public:
 
 		XMAX = Width;
 		YMAX = Height;
-		screen = new wchar_t[XMAX * YMAX];
+		screen.resize(XMAX * YMAX);
 		for (int y = 0; y < YMAX; ++y)
 		{
 			for (int x = 0; x < XMAX; ++x)
 				screen[y * XMAX + x] = color[0];
 		}
-	}
-	~Screen()
-	{
-		delete[] screen;
 	}
 	void screen_refresh() // Обновление экрана
 	{
@@ -35,15 +31,15 @@ public:
 		swprintf_s(s, 256, L"My little ASCII Renderrer - FPS: %3.2f", 1.0f / deltaTime);
 		SetConsoleTitle(s);
 		screen[XMAX * YMAX - 1] = '\0';
-		WriteConsoleOutputCharacter(hConsle, screen, XMAX * YMAX, { 0,0 }, &dwBytesWritten);
+		WriteConsoleOutputCharacter(hConsle, screen.data(), XMAX * YMAX, { 0,0 }, &dwBytesWritten);
 	}
 	void debug_massage(std::string s)
 	{
-		swprintf_s(screen, 256, L"%s", s.c_str());
+		swprintf_s(screen.data(), 256, L"%s", s.c_str());
 	}
 	void debug_float(float v)
 	{
-		swprintf_s(screen, 7, L"%3.3f", v);
+		swprintf_s(screen.data(), 7, L"%3.3f", v);
 	}
 	void screen_clear()
 	{
@@ -59,13 +55,13 @@ public:
 	}
 	void put_point(int a, int b, float ck)
 	{
-		if (on_screen(a, b)) screen[(YMAX - b) * XMAX + a] = color[std::round(ck * color.size())-1];
+		screen[(YMAX - b) * XMAX + a] = color[std::round(ck * color.size())-1];
 	}
 
 
 private:
 	HANDLE hConsle;
 	DWORD dwBytesWritten;
-	wchar_t* screen;
+	std::vector<wchar_t> screen;
 	std::vector<char> color = { ' ', '.', '-',',',':', '=', '+', '%', '*','8', '#', '@','B'};
 };
