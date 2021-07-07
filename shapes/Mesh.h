@@ -12,32 +12,31 @@ class Mesh
 {
 public:
 	// constructor, expects a filepath to a 3D model.
-	Mesh(const Rasterizer& r, std::string const& path) :raster(r)
+	Mesh(std::string const& path)
 	{
 		loadMesh(path);
 	}
 
-	void drawMesh(const MVP_mat& trans)const
+	void drawMesh(std::shared_ptr<Rasterizer> raster,const MVP_mat& trans)const
 	{
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
-			raster.process_trngl(trans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+			raster->process_trngl(trans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
-			childs[i]->drawMesh(trans);
+			childs[i]->drawMesh(raster,trans);
 		}
 	}
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	Mesh(const Rasterizer& r, std::vector<vertex> verts, std::vector<unsigned int> indes) :raster(r)
+	Mesh(std::vector<vertex> verts, std::vector<unsigned int> indes)
 	{
 		this->vertices = verts;
 		this->indices = indes;
 	}
 
 private:
-	const Rasterizer& raster;
 	// mesh Data
 	std::vector<vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -117,6 +116,6 @@ private:
 		}
 
 		// return a mesh object created from the extracted mesh data
-		return std::make_unique<Mesh>(raster, vertices, indices);
+		return std::make_unique<Mesh>(vertices, indices);
 	}
 };
