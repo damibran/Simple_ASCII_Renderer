@@ -12,12 +12,12 @@ class Mesh
 {
 public:
 	// constructor, expects a filepath to a 3D model.
-	Mesh(Rasterizer& r, std::string const& path) :raster(r)
+	Mesh(const Rasterizer& r, std::string const& path) :raster(r)
 	{
 		loadMesh(path);
 	}
 
-	void drawMesh(const MVP_mat& trans)
+	void drawMesh(const MVP_mat& trans)const
 	{
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
@@ -30,14 +30,14 @@ public:
 		}
 	}
 	// loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.
-	Mesh(Rasterizer& r, std::vector<vertex> verts, std::vector<unsigned int> indes) :raster(r)
+	Mesh(const Rasterizer& r, std::vector<vertex> verts, std::vector<unsigned int> indes) :raster(r)
 	{
 		this->vertices = verts;
 		this->indices = indes;
 	}
 
 private:
-	Rasterizer& raster;
+	const Rasterizer& raster;
 	// mesh Data
 	std::vector<vertex> vertices;
 	std::vector<unsigned int> indices;
@@ -83,7 +83,7 @@ private:
 
 	}
 
-	std::unique_ptr<Mesh> processMesh(const aiMesh* mesh, const aiScene* scene)
+	std::unique_ptr<Mesh> processMesh(const aiMesh* mesh, const aiScene* scene)const
 	{
 		// data to fill
 		std::vector<vertex> vertices;

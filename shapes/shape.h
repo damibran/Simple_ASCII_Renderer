@@ -19,7 +19,7 @@ public:
 	{
 		childs.push_back(s);
 	}
-	virtual void drawChild(const MVP_mat& parent_trans)
+	virtual void drawChild(const MVP_mat& parent_trans)const
 	{
 		MVP_mat thisTrans(parent_trans);
 		thisTrans.model = parent_trans.model * position * rotation * scaling;
@@ -48,7 +48,7 @@ public:
 	{
 		scaling = glm::scale(scaling, factor);
 	}
-	glm::vec3 getPos() 
+	glm::vec3 getPos()const
 	{
 		return position * glm::vec4(1);
 	}
