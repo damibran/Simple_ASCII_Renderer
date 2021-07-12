@@ -1,9 +1,9 @@
 #include <time.h>
-#include "utils/screen.h"
-#include "shapes/shape.h"
+#include "utils/Screen.h"
+#include "shapes/Shape.h"
 #include "shapes/Mesh.h"
-#include "utils/input.h"
-#include "utils/camera.h"
+#include "utils/Input.h"
+#include "utils/Camera.h"
 #include <vector>
 #include <chrono>
 
@@ -12,11 +12,12 @@ int main()
 {
 	Screen screen(235, 124);
 	Rasterizer rasterizer(screen);
-	Shape worldObj(rasterizer);
+	Mesh cubMesh("res/cub.obj");
+	Shape worldObj;
 	Camera cam(screen);
 
-	std::shared_ptr<Shape> cub=std::shared_ptr<Shape>(new Shape(rasterizer,std::make_unique<Mesh>("res/cub.obj")));
-	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>(rasterizer);
+	std::shared_ptr<Shape> cub=std::shared_ptr<Shape>(new Shape(std::make_unique<MeshRenderer>(rasterizer,cubMesh)));
+	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>();
 
 	cub->scale({ 10,10,10 });
 	//cub->translate({ 30,0,0 });

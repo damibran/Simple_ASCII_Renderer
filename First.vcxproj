@@ -159,12 +159,13 @@
     <ClCompile Include="renderers\Rasterizer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="utils\input.h" />
-    <ClInclude Include="utils\camera.h" />
+    <ClInclude Include="utils\Input.h" />
+    <ClInclude Include="utils\Camera.h" />
     <ClInclude Include="Model\Mesh.h" />
+    <ClInclude Include="utils\MeshRenderer.h" />
     <ClInclude Include="utils\MVP_mat.h" />
-    <ClInclude Include="utils\screen.h" />
-    <ClInclude Include="shapes\shape.h" />
+    <ClInclude Include="utils\Screen.h" />
+    <ClInclude Include="shapes\Shape.h" />
     <ClInclude Include="shapes\circle.h" />
     <ClInclude Include="shapes\cross.h" />
     <ClInclude Include="shapes\ellipse.h" />

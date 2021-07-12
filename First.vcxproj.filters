@@ -23,10 +23,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="utils\screen.h">
+    <ClInclude Include="utils\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shapes\shape.h">
+    <ClInclude Include="shapes\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\rectangle.h">
@@ -38,10 +38,10 @@
     <ClInclude Include="shapes\ellipse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils\input.h">
+    <ClInclude Include="utils\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils\camera.h">
+    <ClInclude Include="utils\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="shapes\hat.h">
@@ -66,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\MeshRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

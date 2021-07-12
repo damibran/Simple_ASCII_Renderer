@@ -2,6 +2,7 @@
 #include"../utils/MVP_mat.h"
 #include "../utils/screen.h"
 #include "../shapes/Mesh.h"
+#include "../utils/MeshRenderer.h"
 #include <vector>
 #include <memory>
 #include "glm/glm.hpp"
@@ -13,9 +14,8 @@ class Shape
 
 public:
 	Shape(Shape&) = delete;
-	Shape() = delete;
-	Shape(const Rasterizer& r, std::unique_ptr<Mesh> m) : raster(r),mesh(std::move(m)) {}
-	Shape(const Rasterizer& r) :raster(r) {}
+	Shape() = default;
+	Shape(std::unique_ptr<MeshRenderer> mr) : mshRndr(std::move(mr)) {}
 
 	void addChild(std::shared_ptr<Shape>& s)
 	{
@@ -26,8 +26,8 @@ public:
 		MVP_mat thisTrans(parent_trans);
 		thisTrans.model = parent_trans.model * position * rotation * scaling;
 
-		if (mesh.get() != nullptr)
-			mesh->drawMesh(raster, thisTrans);
+		if (mshRndr.get() != nullptr)
+			mshRndr->mesh.drawMesh(mshRndr->raster, thisTrans);
 
 		for (int i = 0; i < childs.size(); ++i)
 		{
@@ -40,9 +40,9 @@ public:
 	}
 	void setPos(const glm::vec3& v)
 	{
-		position= glm::translate(glm::mat4(1), v);
+		position = glm::translate(glm::mat4(1), v);
 	}
-	void rotate(float angle,glm::vec3 v)
+	void rotate(float angle, glm::vec3 v)
 	{
 		rotation = glm::rotate(rotation, glm::radians(angle), v);
 	}
@@ -56,8 +56,7 @@ public:
 	}
 private:
 	std::vector<std::shared_ptr<Shape>> childs;
-	const Rasterizer& raster;
-	std::unique_ptr<Mesh> mesh;
+	std::unique_ptr< MeshRenderer> mshRndr;
 	glm::mat4 position = glm::mat4(1.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scaling = glm::mat4(1.0f);
