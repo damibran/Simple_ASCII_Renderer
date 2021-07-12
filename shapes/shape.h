@@ -56,7 +56,7 @@ public:
 	}
 private:
 	std::vector<std::shared_ptr<Shape>> childs;
-	std::unique_ptr< MeshRenderer> mshRndr;
+	std::unique_ptr<MeshRenderer> mshRndr;
 	glm::mat4 position = glm::mat4(1.0f);
 	glm::mat4 rotation = glm::mat4(1.0f);
 	glm::mat4 scaling = glm::mat4(1.0f);

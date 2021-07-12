@@ -159,6 +159,8 @@
     <ClCompile Include="renderers\Rasterizer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Shaders\ConcreteShaders\CubeShader.h" />
+    <ClInclude Include="Shaders\Shader.h" />
     <ClInclude Include="utils\Input.h" />
     <ClInclude Include="utils\Camera.h" />
     <ClInclude Include="Model\Mesh.h" />

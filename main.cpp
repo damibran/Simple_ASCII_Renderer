@@ -4,6 +4,7 @@
 #include "shapes/Mesh.h"
 #include "utils/Input.h"
 #include "utils/Camera.h"
+#include "Shaders/ConcreteShaders/CubeShader.h"
 #include <vector>
 #include <chrono>
 
@@ -11,7 +12,8 @@
 int main()
 {
 	Screen screen(235, 124);
-	Rasterizer rasterizer(screen);
+	CubeShader cubShdr;
+	Rasterizer rasterizer(screen,cubShdr);
 	Mesh cubMesh("res/cub.obj");
 	Shape worldObj;
 	Camera cam(screen);
@@ -20,7 +22,6 @@ int main()
 	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>();
 
 	cub->scale({ 10,10,10 });
-	//cub->translate({ 30,0,0 });
 	cub->rotate(90, { 1,0,0 });
 
 	lightSource->translate({ 0,0,30 });
@@ -46,13 +47,11 @@ int main()
 		Input::CameraAction action = Input::getCameraAction();
 		cam.moveCamera(action, deltaTime);
 
-		t += elapsedTime.count()*0.3;
 		/////////////////////////////////////////////////////////////////////////////////////////
+		t += elapsedTime.count() * 0.3;
 		lightSource->setPos({30*cos(t),0,30*sin(t)});
-		rasterizer.world_ligth_pos = lightSource->getPos();
-		//cub->rotate(0.1, { 0,1,0 });
+		cubShdr.world_light_pos = lightSource->getPos();
 		cub->rotate(0.1, { 0.2,-1,0.6 });
-		//cub->rotate(-0.1, { 1,0,0 });
 
 		worldObj.drawChild(cam.getCameraProjViewMat());
 
