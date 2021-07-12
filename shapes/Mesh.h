@@ -17,11 +17,11 @@ public:
 		loadMesh(path);
 	}
 
-	void drawMesh(std::shared_ptr<Rasterizer> raster,const MVP_mat& trans)const
+	void drawMesh(const Rasterizer& raster,const MVP_mat& trans)const
 	{
 		for (int i = 0; indices.size() != 0 && i <= indices.size() - 3; i += 3)
 		{
-			raster->process_trngl(trans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
+			raster.process_trngl(trans, vertices[indices[i]], vertices[indices[i + 1]], vertices[indices[i + 2]]);
 		}
 
 		for (int i = 0; i < childs.size(); ++i)
