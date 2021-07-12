@@ -12,11 +12,11 @@ int main()
 {
 	Screen screen(235, 124);
 	Rasterizer rasterizer(screen);
-	Shape worldObj;
+	Shape worldObj(rasterizer);
 	Camera cam(screen);
 
-	std::shared_ptr<Shape> cub=std::shared_ptr<Shape>(new Shape(std::make_unique<Mesh>(rasterizer, "res/cub.obj")));
-	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>();
+	std::shared_ptr<Shape> cub=std::shared_ptr<Shape>(new Shape(rasterizer,std::make_unique<Mesh>("res/cub.obj")));
+	std::shared_ptr<Shape> lightSource = std::make_shared<Shape>(rasterizer);
 
 	cub->scale({ 10,10,10 });
 	//cub->translate({ 30,0,0 });

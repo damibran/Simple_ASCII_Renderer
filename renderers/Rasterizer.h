@@ -15,7 +15,7 @@ class Rasterizer
 	};
 public:
 	Rasterizer(Screen& s) : screen(s) {}
-	void process_trngl(const MVP_mat& trans, const vertex& v0, const vertex& v1, const vertex& v2)
+	void process_trngl(const MVP_mat& trans, const vertex& v0, const vertex& v1, const vertex& v2) const
 	{
 		glm::vec4 clip_a = trans.proj * trans.view * trans.model * glm::vec4(v0.pos, 1.0f);
 		glm::vec4 clip_b = trans.proj * trans.view * trans.model * glm::vec4(v1.pos, 1.0f);
@@ -55,7 +55,7 @@ public:
 	}
 	glm::vec3 world_ligth_pos = glm::vec3(-60, 0, 0);
 private:
-	void put_triangle(const vrtx& v0, const vrtx& v1, const vrtx& v2, const glm::vec3& view_light_pos)
+	void put_triangle(const vrtx& v0, const vrtx& v1, const vrtx& v2, const glm::vec3& view_light_pos)const
 	{
 		float xmin = min3(v0.raster_pos.x, v1.raster_pos.x, v2.raster_pos.x);
 		float ymin = min3(v0.raster_pos.y, v1.raster_pos.y, v2.raster_pos.y);
@@ -89,7 +89,7 @@ private:
 						w0 /= v0.raster_pos.z;
 						w1 /= v1.raster_pos.z;
 						w2 /= v2.raster_pos.z;
-						
+
 						w0 /= corr;
 						w1 /= corr;
 						w2 /= corr;
@@ -112,15 +112,15 @@ private:
 			}
 		}
 	}
-	float min3(const float& a, const float& b, const float& c)
+	float min3(const float& a, const float& b, const float& c)const
 	{
 		return std::min(a, std::min(b, c));
 	}
-	float max3(const float& a, const float& b, const float& c)
+	float max3(const float& a, const float& b, const float& c)const
 	{
 		return std::max(a, std::max(b, c));
 	}
-	float edgeFunction(const glm::vec3& a, const  glm::vec3& b, const  glm::vec2& c)
+	float edgeFunction(const glm::vec3& a, const  glm::vec3& b, const  glm::vec2& c)const
 	{
 		return -((c.x - a.x) * (b.y - a.y) - (c.y - a.y) * (b.x - a.x));
 	}

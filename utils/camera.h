@@ -30,7 +30,7 @@ public:
 		else if (act == Input::CameraAction::ZOOMIN)
 			cameraPos += tspeed * cameraFront;
 	}
-	MVP_mat getCameraProjViewMat()
+	MVP_mat getCameraProjViewMat()const
 	{
 		MVP_mat vp;
 		vp.proj = proj;

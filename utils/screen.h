@@ -49,10 +49,6 @@ public:
 				screen[y * XMAX + x] = color[0];
 		}
 	}
-	bool on_screen(int a, int b) // проверка попадания точки на экран
-	{
-		return (0 <= a && a < XMAX && 0 < b && b < YMAX);
-	}
 	void put_point(int a, int b, float ck)
 	{
 		screen[(YMAX - b) * XMAX + a] = color[std::round(ck * color.size())-1];
