@@ -48,12 +48,6 @@ int main()
 		cam.moveCamera(action, deltaTime);
 
 		/////////////////////////////////////////////////////////////////////////////////////////
-		t += elapsedTime.count() * 0.3;
-		lightSource->setPos({30*cos(t),0,30*sin(t)});
-		cubShdr.world_light_pos = lightSource->getPos();
-		cub->rotate(0.1, { 0.2,-1,0.6 });
-
-		worldObj.drawChild(cam.getCameraProjViewMat());
 
 		screen.screen_refresh();
 		/////////////////////////////////////////////////////////////////////////////////////////
